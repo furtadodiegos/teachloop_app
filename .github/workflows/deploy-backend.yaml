@@ -1,0 +1,31 @@
+name: Deploy the Backend to Production After a Release
+
+on:
+  push:
+    tags:
+      - backend@v*
+
+jobs:
+  deploy-convex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code at tag
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.1.26
+
+      - name: Install Dependencies
+        run: bun install
+        working-directory: packages/backend
+
+      - name: Deploy to Convex
+        run: bunx convex deploy
+        working-directory: packages/backend
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY_PRODUCTION }}
