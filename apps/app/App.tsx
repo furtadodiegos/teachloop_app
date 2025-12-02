@@ -29,7 +29,7 @@ function HelloScreen() {
       }}
     >
       <Text style={{ fontSize: 20 }}>{message}</Text>
-      <Text style={{ fontSize: 20 }}>Test text</Text>
+      <Text style={{ fontSize: 20 }}>Test text!!!</Text>
     </View>
   );
 }
